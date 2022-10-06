@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Models;
 using Data;
 using System.Linq;
+using Extensions;
+using Data.DTO;
 
 namespace Servicies {
     public class SQLBookRepository : IBookRepository
@@ -10,16 +12,17 @@ namespace Servicies {
 
         public SQLBookRepository(BookSystemDbContext context) => _context = context;
 
-        public List<ReservedBook> GetReservedBooks() {
+        public List<ReservedBookDTO> GetReservedBooks() {
             var booksInDb = _context.Books.ToList();
-            var reservedBooks = _context.ReservedBooks.ToList();
+            var reservedBooks = _context.ReservedBooks.Select(item => item.AsDto()).ToList();
             return reservedBooks;
         }
 
-        public List<Book> GetUnreservedBooks() {
+        public List<BookDTO> GetUnreservedBooks() {
             var BookIdsOfReservedBooks = _context.ReservedBooks.Select(c => c.Book.Id).ToList();
             var unreservatedBooks = _context.Books
                 .Where(c => !BookIdsOfReservedBooks.Contains(c.Id))
+                .Select(item => item.AsDto())
                 .ToList();
             return unreservatedBooks;
         }
@@ -66,10 +69,11 @@ namespace Servicies {
             _context.SaveChanges();
         }
 
-        public List<ReservationHistoryRecord> GetReservationHistoryRecords(uint id) {
+        public List<ReservationHistoryRecordDTO> GetReservationHistoryRecords(uint id) {
             var booksInDb = _context.Books.ToList();
             var reservationHistoryRecords = _context.ReservationHistoryRecords
                 .Where(c => c.Book.Id == id)
+                .Select(item => item.AsDto())
                 .ToList();
             return reservationHistoryRecords;
         }
