@@ -11,7 +11,6 @@ namespace Servicies {
         public SQLBookRepository(BookSystemDbContext context) => _context = context;
 
         public List<ReservedBook> GetReservedBooks() {
-            // MAGIC
             var booksInDb = _context.Books.ToList();
             var reservedBooks = _context.ReservedBooks.ToList();
             return reservedBooks;
@@ -65,7 +64,6 @@ namespace Servicies {
         }
 
         public List<ReservationHistoryRecord> GetReservationHistoryRecords(uint id) {
-            //MAGIC
             var booksInDb = _context.Books.ToList();
             var reservationHistoryRecords = _context.ReservationHistoryRecords
                 .Where(c => c.Book.Id == id)
