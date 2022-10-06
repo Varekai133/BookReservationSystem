@@ -4,7 +4,6 @@ using Models;
 
 namespace Data.DTO {
     public class ReservationHistoryRecordDTO {
-        [Key]
         public uint Id { get; set; }
         public Book Book { get; set; }
         public bool Status { get; set; }
