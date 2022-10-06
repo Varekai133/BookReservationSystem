@@ -42,7 +42,7 @@ namespace Test.Controllers
                 _SQLBookRepository.ReserveBook(id, comment);
             }
             catch(Exception ex) {
-                return StatusCode(400, ex.Message + " Check if the id you entered is correct.");
+                return StatusCode(400, ex.Message + ". Or check if the id you entered is correct.");
             }
             return Ok();
         }
@@ -53,7 +53,7 @@ namespace Test.Controllers
                 _SQLBookRepository.UnreserveBook(id);
             }
             catch(Exception ex) {
-                return StatusCode(400, ex.Message + " Check if the id you entered is correct.");
+                return StatusCode(400, ex.Message + ". Check if the id you entered is correct.");
             }
             return Ok();
         }

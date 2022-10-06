@@ -50,7 +50,10 @@ namespace Servicies {
                 Comment = comment,
                 Book = book
             };
-            _context.ReservedBooks.Add(reservedBook);
+            
+            if (!_context.ReservedBooks.Select(c => c.Book.Id).ToList().Contains(id))
+                _context.ReservedBooks.Add(reservedBook);
+            else throw new System.Exception("This book is already reserved");
 
             var reservationHistoryRecord = new ReservationHistoryRecord {
                 Status = true,
